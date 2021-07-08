@@ -25,6 +25,8 @@
         return {
           // 订阅
           subscribe: function (type, fn) {
+            console.log(`subscribe type:`, type);
+            console.log(`subscribe fn:`, fn);
             // 如果消息不存在则创建一个消息类型
             if (!__message[type]) {
               __message[type] = [fn];
@@ -36,6 +38,8 @@
           },
           // 取消订阅
           unsubscribe: function (type, fn) {
+            console.log(`unsubscribe type:`, type);
+            console.log(`unsubscribe fn:`, fn);
             if (!__message[type] || Object.prototype.toString.call(__message[type]) !== '[object Array]') return;
 
             for (var i = __message[type].length - 1; i >= 0; i--) {
@@ -46,14 +50,19 @@
 
           // 发布信息
           publish: function (type, args) {
+            console.log('------------------------');
+            console.log(`publish type:`, type);
+            console.log(`publish args:`, args);
             if (!__message[type]) return;
 
             // 定义消息信息
             var events = {
-              type: type,
+              type: type + '666',
               args: args
             };
-
+            events.args.other = '666';
+            console.log(`this:`, this);
+            console.log('------------------------');
             // 执行注册的消息所对应的所有动作序列
             for (var i = 0; i < __message[type].length; i++) {
               __message[type][i].call(this, events);
@@ -65,21 +74,21 @@
        * 拉出来溜溜
        */
       // 订阅
-      Observer.subscribe('test',fn );
+      Observer.subscribe('test', fn);
       Observer.subscribe('test1', fn1);
-      Observer.unsubscribe('test', fn);
+      // Observer.unsubscribe('test', fn);
 
       // 发布
       Observer.publish('test', { msg: '传递参数0' });
       Observer.publish('test1', { msg: '传递参数1' });
 
-      console.log(`Observer:`, Observer)
+      // console.log(`Observer:`, Observer)
 
-      function fn(msg){
-        console.log(`msg 0:`, msg)
+      function fn(msg) {
+        console.log(`msg 0:`, msg);
       }
-      function fn1(msg){
-        console.log(`msg 1:`, msg)
+      function fn1(msg) {
+        console.log(`msg 1:`, msg);
       }
     </script>
   </body>

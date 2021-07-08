@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      #msg div {
+        width: 220px;
+        background-color: #eee;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <div id="msg"></div>
@@ -75,22 +86,24 @@
         function addMsgItem(e) {
           var text = e.args.text;
           var ul = $('msg');
+          var div = document.createElement('div');
           var li = document.createElement('li');
-          var span = document.createElement('span');
+          var button = document.createElement('button');
+          button.innerHTML = '删除';
 
           li.innerHTML = text;
 
           // 关闭按钮
-          span.onclick = function () {
-            ul.removeChild(li);
-
+          button.onclick = function () {
+            ul.removeChild(div);
             Observer.publish('removeCommentMessage', {
               num: -1
             });
           };
 
-          ul.appendChild(span);
-          ul.appendChild(li);
+          div.appendChild(li);
+          div.appendChild(button);
+          ul.appendChild(div);
         }
 
         Observer.subscribe('addCommentMessage', addMsgItem);
@@ -102,9 +115,10 @@
         function changeMsgNum(e) {
           var num = e.args.num;
           // $('msg_num').innerHTML = parseInt($('msg_num').innerHTML || 0) + 1;
-          $('msg_num').innerHTML = parseInt(
-            document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1].innerHTML
-          );
+          $('msg_num').innerHTML = document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1]
+            ? 'msg_num: ' +
+              document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1].innerHTML
+            : '';
         }
 
         // 注册添加评论信息

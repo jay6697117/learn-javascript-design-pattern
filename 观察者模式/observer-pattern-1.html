@@ -115,14 +115,7 @@
         function changeMsgNum(e) {
           var num = e.args.num;
           // $('msg_num').innerHTML = parseInt($('msg_num').innerHTML || 0) + 1;
-<<<<<<< HEAD:观察者模式/observer-pattern-1.html
-          $('msg_num').innerHTML = document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1]
-            ? 'msg_num: ' +
-              document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1].innerHTML
-            : '';
-=======
           $('msg_num').innerHTML = document.querySelectorAll('#msg li')[document.querySelectorAll('#msg li').length - 1].innerHTML;
->>>>>>> 9c0d554d9cc76cd7d58f913a3298188092ea52ed:observer-pattern-1.html
         }
 
         // 注册添加评论信息
